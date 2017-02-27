@@ -1,0 +1,26 @@
+
+class Form(models.Model):
+  number = models.IntegerField()
+  
+
+class StudyDay(models.Model):
+  form = models.ForeignKey(Form)
+  lesson1 = models.TextField()
+  lesson2 = models.TextField()
+  lesson3 = models.TextField()
+  lesson4 = models.TextField()
+  lesson5 = models.TextField()
+  lesson6 = models.TextField()
+  lesson7 = models.TextField()
+
+  def get_by_form(self, form):
+    return self.get(form = form)
+
+class StudyWeek(models.Model):
+  form = models.ForeignKey(Form)
+  monday = models.ForeignKey(StudyDay)
+  tuesday = models.ForeignKey(StudyDay)
+  wednesday = models.ForeignKey(StudyDay)
+  thursday = models.ForeignKey(StudyDay)
+  friday = models.ForeignKey(StudyDay)
+

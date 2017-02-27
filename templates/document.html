@@ -1,0 +1,17 @@
+{% extends 'news.html' %}
+
+{% block title %}{{ doc.title }}{% endblock %}
+{% block favicon_src %}../{% endblock %}
+{% block brand_src %}../{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1> {{ doc.title }} </h1>
+  </div>
+  <p class="lead"> {{ doc.description }} </p>
+  <div class="media">
+    <iframe src="http://docs.google.com/viewer?url={{ doc.file.url }}&embedded=true"></iframe>
+  </div>
+  <span class="divider" role="separator"></span>
+  <p class="text-muted">Опубликовано {{ doc.pub_date }}. {{ doc.views_count }} {{ word }}.</p>
+{% endblock %}

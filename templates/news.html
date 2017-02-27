@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Новости 
+{% endblock %}
+
+{% block news_styles %}
+  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+{% endblock %}
+
+{% block news %}
+  <ul class="dropdown-menu">
+    {% for ne in news %}
+      <li><a href="{{ ne.get_url }}">{{ ne.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

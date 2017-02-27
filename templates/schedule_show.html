@@ -1,0 +1,337 @@
+{% extends "news.html" %}
+
+{% block title %}
+Расписание для {{ sform_no }}х классов
+{% endblock %}
+
+{% block favicon_src %}../{% endblock %}
+{% block brand_src %}../{% endblock %}
+
+{% block content %}
+  <ul class="nav nav-tabs lead">
+    {% for sched in scheds %}
+      <li{% if sched.sform.designator == 'а' %} class="active"{% endif %}><a href="#{{ sched.sform.designator }}" data-toggle="tab">{{ sched.sform }} класс</a></li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content">
+    {% for sched in scheds %}
+      <div class="tab-pane {% if sched.sform.designator == 'а' %}active{% endif %}" id="{{ sched.sform.designator }}">
+         <div class="form-group">
+           <div class="page-header">
+             <h3 class="text-center">Понедельник</h3>
+           </div>
+           <table class = "table table-hover table-striped">
+             <thead class = "bg-primary">
+               <th>№ урока</th>
+               <th>Время начала</th>
+               <th>Время конца</th>
+               <th>Предмет</th>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>{{ les1.start }}</td>
+                <td>{{ les1.end }}</td>
+                <td>{{ sched.monday1 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>{{ les2.start }}</td>
+                <td>{{ les2.end }}</td>
+                <td>{{ sched.monday2 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">3</th>
+                 <td>{{ les3.start }}</td>
+                 <td>{{ les3.end }}</td>
+                 <td>{{ sched.monday3 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">4</th>
+                 <td>{{ les4.start }}</td>
+                 <td>{{ les4.end }}</td>
+                 <td>{{ sched.monday4 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">5</th>
+                 <td>{{ les5.start }}</td>
+                 <td>{{ les5.end }}</td>
+                 <td>{{ sched.monday5 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">6</th>
+                 <td>{{ les6.start }}</td>
+                 <td>{{ les6.end }}</td>
+                 <td>{{ sched.monday6 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">7</th>
+                 <td>{{ les7.start }}</td>
+                 <td>{{ les7.end }}</td>
+                 <td>{{ sched.monday7 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">8</th>
+                 <td>{{ les8.start }}</td>
+                 <td>{{ les8.end }}</td>
+                 <td>{{ sched.monday8 }}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+         <div class="form-group">
+           <div class="page-header">
+             <h3 class="text-center">Вторник</h3>
+           </div>
+           <table class = "table table-hover table-striped">
+             <thead class = "bg-primary">
+               <th>№ урока</th>
+               <th>Время начала</th>
+               <th>Время конца</th>
+               <th>Предмет</th>
+             </thead>
+             <tbody>
+               <tr>
+                 <th scope="row">1</th>
+                 <td>{{ les1.start }}</td>
+                 <td>{{ les1.end }}</td>
+                 <td>{{ sched.tuesday1 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">2</th>
+                 <td>{{ les2.start }}</td>
+                 <td>{{ les2.end }}</td>
+                 <td>{{ sched.tuesday2 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">3</th>
+                 <td>{{ les3.start }}</td>
+                 <td>{{ les3.end }}</td>
+                 <td>{{ sched.tuesday3 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">4</th>
+                 <td>{{ les4.start }}</td>
+                 <td>{{ les4.end }}</td>
+                 <td>{{ sched.tuesday4 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">5</th>
+                 <td>{{ les5.start }}</td>
+                 <td>{{ les5.end }}</td>
+                 <td>{{ sched.tuesday5 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">6</th>
+                 <td>{{ les6.start }}</td>
+                 <td>{{ les6.end }}</td>
+                 <td>{{ sched.tuesday6 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">7</th>
+                 <td>{{ les7.start }}</td>
+                 <td>{{ les7.end }}</td>
+                 <td>{{ sched.tuesday7 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">8</th>
+                 <td>{{ les8.start }}</td>
+                 <td>{{ les8.end }}</td>
+                 <td>{{ sched.tuesday8 }}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+         <div class="form-group">
+           <div class="page-header">
+             <h3 class="text-center">Среда</h3>
+           </div>
+           <table class = "table table-hover table-striped">
+             <thead class = "bg-primary">
+               <th>№ урока</th>
+               <th>Время начала</th>
+               <th>Время конца</th>
+               <th>Предмет</th>
+             </thead>
+             <tbody>
+               <tr>
+                 <th scope="row">1</th>
+                 <td>{{ les1.start }}</td>
+                 <td>{{ les1.end }}</td>
+                 <td>{{ sched.wednesday1 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">2</th>
+                 <td>{{ les2.start }}</td>
+                 <td>{{ les2.end }}</td>
+                 <td>{{ sched.wednesday2 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">3</th>
+                 <td>{{ les3.start }}</td>
+                 <td>{{ les3.end }}</td>
+                 <td>{{ sched.wednesday3 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">4</th>
+                 <td>{{ les4.start }}</td>
+                 <td>{{ les4.end }}</td>
+                 <td>{{ sched.wednesday4 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">5</th>
+                 <td>{{ les5.start }}</td>
+                 <td>{{ les5.end }}</td>
+                 <td>{{ sched.wednesday5 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">6</th>
+                 <td>{{ les6.start }}</td>
+                 <td>{{ les6.end }}</td>
+                 <td>{{ sched.wednesday6 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">7</th>
+                 <td>{{ les7.start }}</td>
+                 <td>{{ les7.end }}</td>
+                 <td>{{ sched.wednesday7 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">8</th>
+                 <td>{{ les8.start }}</td>
+                 <td>{{ les8.end }}</td>
+                 <td>{{ sched.wednesday8 }}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+         <div class="form-group">
+           <div class="page-header">
+             <h3 class="text-center">Четверг</h3>
+           </div>
+           <table class = "table table-hover table-striped">
+             <thead class = "bg-primary">
+               <th>№ урока</th>
+               <th>Время начала</th>
+               <th>Время конца</th>
+               <th>Предмет</th>
+             </thead>
+             <tbody>
+               <tr>
+                 <th scope="row">1</th>
+                 <td>{{ les1.start }}</td>
+                 <td>{{ les1.end }}</td>
+                 <td>{{ sched.thursday1 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">2</th>
+                 <td>{{ les2.start }}</td>
+                 <td>{{ les2.end }}</td>
+                 <td>{{ sched.thursday2 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">3</th>
+                 <td>{{ les3.start }}</td>
+                 <td>{{ les3.end }}</td>
+                 <td>{{ sched.thursday3 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">4</th>
+                 <td>{{ les4.start }}</td>
+                 <td>{{ les4.end }}</td>
+                 <td>{{ sched.thursday4 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">5</th>
+                 <td>{{ les5.start }}</td>
+                 <td>{{ les5.end }}</td>
+                 <td>{{ sched.thursday5 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">6</th>
+                 <td>{{ les6.start }}</td>
+                 <td>{{ les6.end }}</td>
+                 <td>{{ sched.thursday6 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">7</th>
+                 <td>{{ les7.start }}</td>
+                 <td>{{ les7.end }}</td>
+                 <td>{{ sched.thursday7 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">8</th>
+                 <td>{{ les8.start }}</td>
+                 <td>{{ les8.end }}</td>
+                 <td>{{ sched.thursday8 }}</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+         <div class="form-group">
+           <div class="page-header">
+             <h3 class="text-center">Пятница</h3>
+           </div>
+           <table class = "table table-hover table-striped">
+             <thead class = "bg-primary">
+               <th>№ урока</th>
+               <th>Время начала</th>
+               <th>Время конца</th>
+               <th>Предмет</th>
+             </thead>
+             <tbody>
+               <tr>
+                 <th scope="row">1</th>
+                 <td>{{ les1.start }}</td>
+                 <td>{{ les1.end }}</td>
+                 <td>{{ sched.friday1 }}</td>
+               </tr>
+               <tr>
+                 <th scope="row">2</th>
+                <td>{{ les2.start }}</td>
+                <td>{{ les2.end }}</td>
+                <td>{{ sched.friday2 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>{{ les3.start }}</td>
+                <td>{{ les3.end }}</td>
+                <td>{{ sched.friday3 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>{{ les4.start }}</td>
+                <td>{{ les4.end }}</td>
+                <td>{{ sched.friday4 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>{{ les5.start }}</td>
+                <td>{{ les5.end }}</td>
+                <td>{{ sched.friday5 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>{{ les6.start }}</td>
+                <td>{{ les6.end }}</td>
+                <td>{{ sched.friday6 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">7</th>
+                <td>{{ les7.start }}</td>
+                <td>{{ les7.end }}</td>
+                <td>{{ sched.friday7 }}</td>
+              </tr>
+              <tr>
+                <th scope="row">8</th>
+                <td>{{ les8.start }}</td>
+                <td>{{ les8.end }}</td>
+                <td>{{ sched.friday8 }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,160 @@
+﻿.navbar {
+  opacity: .97;
+}
+
+.navbar-brand {
+  padding: 15px 15px;
+  margin-top: 0px;
+  height: 102px;
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+}
+
+.navbar-nav>li>a {
+  padding: 0px 10px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.navbar-brand, .navbar-nav>li>a {
+  height: 110px;
+  line-height: 110px;
+}
+
+.navbar-header>.navbar-text {
+  margin-right: 0px;
+}
+
+.navbar-nav {
+  margin: 15px 0px;
+}
+
+.navbar-toggle {
+  margin-top: 30px;
+  margin-bottom: 35px;
+  padding: 27px 30px;
+}
+
+.navbar>.container {
+  min-width: 420px;
+}
+
+@media (min-width: 1200px) {
+  .navbar>.container {
+    width: 1240px;
+  }
+}
+
+.dropdown-header{
+  font-size: 14px;
+}
+
+.dropdown-menu{
+  top: 65%;
+  font-size: 16px;
+}
+
+.dropdown-menu>li{
+  padding: 3px 10px;
+}
+
+.dropdown-menu>.divider {
+  padding: 0px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 0px) {
+  body > .container {
+    margin-top: 15px;
+    min-width:420px;
+  }
+}
+
+@media (min-width: 768px) {
+  body > .container {
+    margin-top: 300px;
+  }
+}
+
+@media (min-width: 992px) {
+  body > .container {
+    margin-top: 150px;
+  }
+}
+
+@media (min-width: 1200px) {
+  body > .container {
+    margin-top: 15px;
+  }
+}
+
+body > .container > object {
+  width: inherit;
+  min-width: 420px;
+  min-height: 420px;
+}
+
+.mbou-dropdown-btn {
+  width: inherit;
+}
+
+.mbou-input-wide {
+  width: 80%;
+}
+
+.btn-group-vertical {
+  display: block;
+}
+
+@media print {
+  #navbar, .navbar-toggle, .sidebar, footer {
+    display: none;
+  }
+
+  .container, .main, .row {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+@media (min-width: 0px) {
+  .sidebar {
+    margin-top: 85px;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    margin-top: 335px;
+  }
+}
+
+@media (min-width: 992px) {
+  .sidebar {
+    margin-top: 230px;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .sidebar {
+    margin-top: 85px;
+  }
+}
+
+.sidebar {
+  height: 400px;
+  width: 225px;
+  opacity: .97;
+}
+
+ul.nav-tabs > li.active > a, ul.nav-tabs > li.active > a:focus {
+  background-color: #e7e7e7;
+}
+}
