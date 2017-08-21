@@ -100,13 +100,15 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Документы <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="{% url 'docs_newest' %}">Новые документы</a></li>
+                <li class="dropdown-header">Категории</li>
+                <li role="separator" class="divider"></li>
                 {% if cats %}
                   {% for category in cats %}
                     <li><a href="{{ category.get_url }}">{{ category.name }}</a></li>
-                    <li role="separator" class="divider"></li>
                   {% endfor %}
+                  <li role="separator" class="divider"></li>
                 {% endif %}
+                  <li class="dropdown-header"><a href="{% url 'docs_newest' %}">Все документы</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -140,16 +142,7 @@
                 <li><a href="#">Электронные сервисы</a></li>
               </ul>
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Галерея <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Наша школа</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Конкурсы</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Мероприятия</a></li>
-              </ul>
-            </li>
+            <li><a href="{% url 'galleries' %}">Галереи</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

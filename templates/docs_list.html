@@ -11,11 +11,11 @@
 
 {% block content %}
   <div class="page-header">
-    <h1 class="text-center">Документы</h1>
+    <h1 class="text-center">Документы: {% if cat_name %} категория "{{ cat_name }}" {% else %} по дате добавления {% endif %}</h1>
     <div class="input-group-lg" align="center">
       <div class="input-group-btn">
         <span class="btn btn-success" type="button">
-          <a href="{% url 'docs_newest' %}">Сортировать по дате</a>
+          <a href="{% url 'docs_newest' %}">Все документы (по дате добавления)</a>
         </span>
       </div>
       <div class="input-group-btn">

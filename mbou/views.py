@@ -10,6 +10,8 @@ from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleFor
 
 from mbou import miscellaneous
 
+from photologue import views
+
 def index(request):
   return render(request, 'index.html', { "news": News.objects.all, 'year' : timezone.now,  "cats" : DocumentCategory.objects.get_top_X, })
 
@@ -118,4 +120,20 @@ def docs_by_category(request, cat_name):
     raise Http404()
   documents = Document.objects.by_category(cat_obj)
   pagination = miscellaneous.paginate(documents, request, key='document')
-  return render(request, 'docs_list.html', { 'title' : u'Новые документы', 'news' : News.objects.all, 'year' : timezone.now, 'docs' : pagination, 'categories' : DocumentCategory.objects.order_by_doc_count().all, "cats" : DocumentCategory.objects.get_top_X,  })
+  return render(request, 'docs_list.html', { 'title' : u'Новые документы', 'news' : News.objects.all, 'year' : timezone.now, 'docs' : pagination, 'categories' : DocumentCategory.objects.order_by_doc_count().all, "cats" : DocumentCategory.objects.get_top_X, "cat_name" : cat_obj.name, })
+
+class MbouPhotoListView(views.PhotoListView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoListView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_x
+    return context
+
+class MbouGalleryListView(views.GalleryListView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryListView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context

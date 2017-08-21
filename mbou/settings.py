@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'photologue',
+    'sortedm2m',
     'mbou',
 ]
 
@@ -51,6 +54,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mbou.urls'
+
+SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -70,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mbou.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -129,4 +133,3 @@ STATICFILES_FINDERS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-

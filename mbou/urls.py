@@ -13,14 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from mbou import views, settings
 from django.views.static import serve
+from photologue.sitemaps import GallerySitemap, PhotoSitemap
+from photologue.views import GalleryListView
+
+from django.views.generic import CreateView
+from photologue.models import Photo
+
+sitemaps = {
+    'photologue_galleries': GallerySitemap,
+    'photologue_photos': PhotoSitemap,
+}
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name = "admin"),
+    url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^index/', views.index, name = "index"),
     url(r'^base/', views.base, name = "base"),
     url(r'^news/(?P<id>\d+)/?$', views.news, name = "news"),
@@ -33,4 +44,5 @@ urlpatterns = [
     url(r'^documents/(?P<title>.+)/', views.document_show, name = "document_show"),
     url(r'^docs-newest/$', views.docs_newest, name = "docs_newest"),
     url(r'^docs-category/(?P<cat_name>.+)/', views.docs_by_category, name = "docs_by_category"),
+    url(r'^galleries/', views.MbouGalleryListView.as_view(paginate_by=5), name="galleries"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
