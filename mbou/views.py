@@ -3,13 +3,16 @@ from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 
 from django.utils import timezone
+import re
 
-from mbou.models import News, StudyForm, LessonTiming, Schedule
-from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm
+from mbou.models import News, StudyForm, LessonTiming, Schedule, Document, DocumentCategory
+from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm, DocumentForm
+
+from mbou import miscellaneous
 
 def index(request):
-  return render(request, 'index.html', { "news": News.objects.all, })
-  
+  return render(request, 'index.html', { "news": News.objects.all, 'year' : timezone.now,  "cats" : DocumentCategory.objects.get_top_X, })
+
 def base(request):
   return render(request, 'base.html', {})
 
@@ -18,7 +21,7 @@ def news(request, id):
     news = News.objects.get(pk = int(id))
   except News.DoesNotExist:
     raise Http404()
-  return render(request, "news_one.html", { "n": news, "news": News.objects.all, "year": timezone.now, })
+  return render(request, "news_one.html", { "n": news, "news": News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
 
 def news_add(request):
   if request.method == 'POST':
@@ -29,7 +32,7 @@ def news_add(request):
       return HttpResponseRedirect(reverse('news', kwargs = {'id' : added.id,}))
   else:
     form = AddNewsForm()
-    return render(request, 'news_add.html', { 'form' : form, "news": News.objects.all, "year": timezone.now, })
+  return render(request, 'news_add.html', { 'form' : form, "news": News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
 
 def lesson_edit(request):
   if request.method == "POST":
@@ -39,10 +42,10 @@ def lesson_edit(request):
       return HttpResponseRedirect(reverse('lessons_show'))
     else:
       form = LessonTimingForm(request.POST)
-      return render(request, 'lesson_edit.html', { 'form' : form, 'news': News.objects.all, "year": timezone.now, })
+      return render(request, 'lesson_edit.html', { 'form' : form, 'news': News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
   else:
     form = LessonTimingForm()
-    return render(request, 'lesson_edit.html', { 'form' : form, 'news': News.objects.all, "year": timezone.now, })
+  return render(request, 'lesson_edit.html', { 'form' : form, 'news': News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
 
 def schedule_edit(request):
   lesson1 = LessonTiming.objects.get(number = 1)
@@ -61,7 +64,7 @@ def schedule_edit(request):
       return HttpResponseRedirect(reverse('schedule_show', kwargs = {'sform_no' : added.sform.number}))
   else:
     form = ScheduleForm()
-    return render(request, 'schedule_edit.html', { 'form' : form, 'news' : News.objects.all, "year": timezone.now, 'les1' : lesson1, 'les2' : lesson2, 'les3' : lesson3, 'les4' : lesson4, 'les5' : lesson5, 'les6' : lesson6, 'les7' : lesson7, 'les8' : lesson8, })
+    return render(request, 'schedule_edit.html', { 'form' : form, 'news' : News.objects.all, "year": timezone.now, 'les1' : lesson1, 'les2' : lesson2, 'les3' : lesson3, 'les4' : lesson4, 'les5' : lesson5, 'les6' : lesson6, 'les7' : lesson7, 'les8' : lesson8, "cats" : DocumentCategory.objects.get_top_X, })
 
 def schedule_show(request, sform_no):
   lesson1 = LessonTiming.objects.get(number = 1)
@@ -75,8 +78,44 @@ def schedule_show(request, sform_no):
   scheds = Schedule.objects.filter(sform__number = int(sform_no))
   if scheds != None:
     scheds.order_by('designator')
-  return render(request, 'schedule_show.html', { 'sform_no': sform_no, 'scheds' : scheds, 'news' : News.objects.all, "year": timezone.now, 'les1' : lesson1, 'les2' : lesson2, 'les3' : lesson3, 'les4' : lesson4, 'les5' : lesson5, 'les6' : lesson6, 'les7' : lesson7, 'les8' : lesson8, })
+  return render(request, 'schedule_show.html', { 'sform_no': sform_no, 'scheds' : scheds, 'news' : News.objects.all, "year": timezone.now, 'les1' : lesson1, 'les2' : lesson2, 'les3' : lesson3, 'les4' : lesson4, 'les5' : lesson5, 'les6' : lesson6, 'les7' : lesson7, 'les8' : lesson8, "cats" : DocumentCategory.objects.get_top_X, })
 
 def lessons_show(request):
   lessons = LessonTiming.objects.all().order_by('number')
-  return render(request, 'lessons_show.html', { 'lessons' : lessons, 'news' : News.objects.all, "year": timezone.now, })
+  return render(request, 'lessons_show.html', { 'lessons' : lessons, 'news' : News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
+
+def document_show(request, title):
+  try:
+    doc = Document.objects.get_by_title(title);
+  except Document.DoesNotExist:
+    raise Http404()
+  doc_namext = re.split('[.]+', doc.doc.name)
+  if doc_namext[1] == 'pdf':
+    is_pdf = True
+  else:
+    is_pdf = False
+  return render(request, "document.html", { 'doc' : doc, 'news' : News.objects.all, 'year' : timezone.now, 'categories' : DocumentCategory.objects.order_by_doc_count().all, "cats" : DocumentCategory.objects.get_top_X, 'is_pdf' : is_pdf} )
+
+def document_add(request):
+   if request.method == 'POST':
+     form = DocumentForm(request.POST, request.FILES);
+     if form.is_valid():
+       added = form.save()
+       return HttpResponseRedirect(reverse('document_show', kwargs = { 'title' : added.title_id, }))
+   else:
+     form = DocumentForm()
+   return render(request, "document_add.html", { 'form' : form, 'news' : News.objects.all, 'year' : timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
+
+def docs_newest(request):
+  documents = Document.objects.newest()
+  pagination = miscellaneous.paginate(documents, request, key='document')
+  return render(request, 'docs_list.html', { 'title' : u'Новые документы', 'news' : News.objects.all, 'year' : timezone.now, 'docs' : pagination, 'categories' : DocumentCategory.objects.order_by_doc_count().all, "cats" : DocumentCategory.objects.get_top_X,  })
+
+def docs_by_category(request, cat_name):
+  try:
+    cat_obj = DocumentCategory.objects.get_by_name_id(cat_name)
+  except DocumentCategory.DoesNotExist:
+    raise Http404()
+  documents = Document.objects.by_category(cat_obj)
+  pagination = miscellaneous.paginate(documents, request, key='document')
+  return render(request, 'docs_list.html', { 'title' : u'Новые документы', 'news' : News.objects.all, 'year' : timezone.now, 'docs' : pagination, 'categories' : DocumentCategory.objects.order_by_doc_count().all, "cats" : DocumentCategory.objects.get_top_X,  })

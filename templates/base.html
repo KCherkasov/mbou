@@ -2,35 +2,35 @@
 <html lang="en">
   <head>
     {% block meta %}
-    
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+
     <meta name="description" content="официальный сайт МБОУ СОШ №7 г.Лобня">
     <meta name="author" content="Кирилл Черкасов">
-   
+
     {% endblock %}
-   
+
     <title> {% block title %} {% endblock %} | МБОУ СОШ №7 г.Лобня</title>
 
     <!-- Bootstrap -->
     {% load static %}
-    
+
     {% block styles %}
-    
+
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
     <link href="{% static 'css/adjustments.css' %}" rel="stylesheet">
-    
+
     {% endblock %}
-    
+
     <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
-    
+
     <link rel="icon" href="{% block favicon_src %}{% endblock %}../media/pics/favicon.png">
-    
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -100,19 +100,19 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Документы <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Учредительные документы</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Локальные акты</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Публичные доклады</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Образовательные программы</a></li>
+                <li><a href="{% url 'docs_newest' %}">Новые документы</a></li>
+                {% if cats %}
+                  {% for category in cats %}
+                    <li><a href="{{ category.get_url }}">{{ category.name }}</a></li>
+                    <li role="separator" class="divider"></li>
+                  {% endfor %}
+                {% endif %}
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Коллектив <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Администрация</a></li>            
+                <li><a href="#">Администрация</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Педагоги</li>
                 <li><a href="#">Начальная школа</a></li>
@@ -122,9 +122,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Учебный процесс <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Учебный план</a></li>        
+                <li><a href="#">Учебный план</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Дополнительное образование</a></li>        
+                <li><a href="#">Дополнительное образование</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Этапы обучения</li>
                 <li><a href="#">Начальные классы</a></li>
@@ -143,7 +143,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Галерея <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Наша школа</a></li>        
+                <li><a href="#">Наша школа</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Конкурсы</a></li>
                 <li role="separator" class="divider"></li>
@@ -155,7 +155,7 @@
       </div>
       {% endblock %}
     </nav>
-    
+
     <!-- Begin page content -->
     <div class="container content">
       <div class="row">
@@ -168,6 +168,7 @@
              <li><a href="{% url 'add_news' %}">Добавить новость</a></li>
              <li><a href="{% url 'edit_schedule' %}">Редактировать расписание</a></li>
              <li><a href="{% url 'edit_lesson' %}">Редактировать звонки</a></li>
+             <li><a href="{% url 'document_add' %}">Добавить документ</a></li>
            </ul>
         </div>
       {% endblock %}
@@ -186,7 +187,7 @@
       {% endblock %}
     </footer>
 
-    
+
     {% block scripts %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
