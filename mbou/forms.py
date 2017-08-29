@@ -230,3 +230,42 @@ class GalleryAddForm(forms.Form):
     gallery.description = data.get('description')
     gallery.save()
     return gallery
+
+class SignInForm(forms.Form):
+  login = forms.CharField(widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Введите логин', }), max_length = 30, label = 'Логин')
+  password = forms.CharField(widget = forms.PasswordInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Введите пароль', }), label = 'Пароль')
+
+  def clean(self):
+    data = self.cleaned_data
+    user = authenticate(username = data.get('login'), password = data.get('password'))
+    if user is not None:
+      if user.is_active:
+        data['user'] = user
+      else:
+        raise forms.ValidationError('Учетная запись не активна')
+    else:
+      raise forms.ValidationError('Неверный логин и/или пароль')
+
+class ProfileEditForm(forms.Form):
+  first_name = forms.CharField(widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Имя Отчество', }), max_length = 30, label = 'Имя')
+  last_name = forms.CharField(widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Фамилия', }), max_length = 30, label = 'Фамилия')
+  email = forms.CharField(widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Введите e-mail', }), max_length = 30, label = 'Электронная почта')
+  password1 = forms.CharField(widget = forms.PasswordInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Введите пароль', }), min_length = 6, label = 'Пароль')
+  password2 = forms.CharField(widget = forms.PasswordInput(attrs = { 'class' : 'form-control', 'placeholder' : 'Подтвердите пароль', }), min_length = 6, label = 'Пароль еще раз')
+
+  def clean_password2(self):
+    password = self.cleaned_data.get('password1', '')
+    confirm = self.cleaned_data.get('password2', '')
+    if password != confirm:
+      forms.ValidationError('Введенные пароли не совпадают')
+
+  def save(self, user):
+    data = self.cleaned_data
+    user.first_name = data.get('first_name')
+    user.last_name = data.get('last_name')
+    user.email = data.get('email')
+    password = self.cleaned_data.get('password1', '')
+    if password != '':
+      user.set_password(password)
+    user.save()
+    return self

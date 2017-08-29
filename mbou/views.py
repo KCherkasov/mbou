@@ -2,13 +2,18 @@
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView
+
 from photologue.models import Photo, Gallery
 
 from django.utils import timezone
 import re
 
+from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
+from django.contrib import auth
+
 from mbou.models import News, StudyForm, LessonTiming, Schedule, Document, DocumentCategory
-from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm, DocumentForm, PhotoAddForm, GalleryAddForm
+from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm, DocumentForm, PhotoAddForm, GalleryAddForm, SignInForm, ProfileEditForm
 
 from mbou import miscellaneous
 
@@ -291,3 +296,36 @@ def photo_add(request):
   else:
     form = PhotoAddForm()
   return render(request, 'photo_add.html', { 'form' : form, 'year' : timezone.now, 'news' : News.objects.all, 'cats' : DocumentCategory.objects.get_top_X, })
+
+def login(request):
+  redirect = request.GET.get('continue', '/')
+  if request.user.is_authenticated():
+    return HttpResponseRedirect(redirect)
+  if request.method == 'POST':
+    form = SignInForm(request.POST)
+    if form.is_valid():
+      auth.login(request, form.cleaned_data['user'])
+      return HttpResponseRedirect(redirect)
+    else:
+      return HttpResponseRedirect(reverse('login'))
+  else:
+    form = SignInForm()
+  return render(request, 'login.html', { 'form' : form, })
+
+@login_required
+def edit(request):
+  if request.method == 'POST':
+    form = ProfileEdit(request.POST)
+    if form.is_valid():
+      form.save(request.user)
+      return HttpResponseRedirect(reverse('index'))
+  else:
+    user = model_to_dict(request.user)
+    form = ProfileEditForm(user)
+  return render(request, 'profile_edit.html', { 'form' : form, 'user' : request.user })
+
+@login_required
+def logout(request):
+  redirect = request.GET.get('continue', '/')
+  auth.logout(request)
+  return HttpResponseRedirect(redirect)

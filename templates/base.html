@@ -152,21 +152,27 @@
     <!-- Begin page content -->
     <div class="container content">
       <div class="row">
-      {% block controls %}
-        <div class="col-sm-3 col-md-2 sidebar" role="group" aria-label="controls">
-           <div class="page-header">
-             <h5 class="text-center">Панель управления</h5>
-           </div>
-           <ul class="nav nav-sidebar">
-             <li><a href="{% url 'add_news' %}">Добавить новость</a></li>
-             <li><a href="{% url 'edit_schedule' %}">Редактировать расписание</a></li>
-             <li><a href="{% url 'edit_lesson' %}">Редактировать звонки</a></li>
-             <li><a href="{% url 'document_add' %}">Добавить документ</a></li>
-             <li><a href="{% url 'gallery_add' %}">Добавить галлерею</a></li>
-             <li><a href="{% url 'photo_add' %}">Добавить фотографию</a></li>
-           </ul>
-        </div>
-      {% endblock %}
+      {% if request.user.is_authenticated %}
+        {% block controls %}
+          <div class="col-sm-3 col-md-2 sidebar" role="group" aria-label="controls">
+             <div class="page-header">
+               <h5 class="text-center">Панель управления</h5>
+               <h5 class="text-center">Здравствуйте, {{ request.user.first_name }}!</h5>
+             </div>
+             <ul class="nav nav-sidebar">
+               <li><a href="{% url 'profile-edit' %}">Редактировать профиль</a></li>
+               <li><a href="{% url 'logout' %}">Выйти</a></li>
+               <li><span class="separator" role="divider"></></li>
+               <li><a href="{% url 'add_news' %}">Добавить новость</a></li>
+               <li><a href="{% url 'edit_schedule' %}">Редактировать расписание</a></li>
+               <li><a href="{% url 'edit_lesson' %}">Редактировать звонки</a></li>
+               <li><a href="{% url 'document_add' %}">Добавить документ</a></li>
+               <li><a href="{% url 'gallery_add' %}">Добавить галлерею</a></li>
+               <li><a href="{% url 'photo_add' %}">Добавить фотографию</a></li>
+             </ul>
+          </div>
+        {% endblock %}
+      {% endif %}
         <div class=" col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           {% block content %}
           {% endblock %}
