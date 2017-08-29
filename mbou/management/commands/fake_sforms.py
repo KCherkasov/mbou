@@ -6,7 +6,7 @@ class Command(BaseCommand):
   help = "creates fake forms"
 
   def handle(self, *args, **options):
-    number = 11
+    number = 12
     for i in range(1, number):
       frm = StudyForm()
       frm.number = i

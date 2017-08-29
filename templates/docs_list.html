@@ -2,9 +2,6 @@
 
 {% if cat_name %}
 
-  {% block favicon_src %}../{% endblock %}
-  {% block brand_src %}../{% endblock %}
-
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -59,5 +56,7 @@
     <div class="paginator-block" align="center">
       {% include 'paginator.html' with objects=docs %}
     </div>
+  {% else %}
+    <h3 class="text-center">Пока не добавлено ни одного документа</h3>
   {% endif %}
 {% endblock %}

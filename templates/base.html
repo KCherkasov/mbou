@@ -29,7 +29,7 @@
 
     <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
 
-    <link rel="icon" href="{% block favicon_src %}{% endblock %}../media/pics/favicon.png">
+    <link rel="icon" href="{{ MEDIA_URL }}/pics/favicon.png">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,7 +50,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <p class="navbar-text"><a class="navbar-brand" href="{% url 'index' %}"><img src="{% block brand_src %}{% endblock %}../media/pics/mbou-7_300_25p.gif" width="110px" height="110px"> МБОУ СОШ №7</a></p>
+          <p class="navbar-text"><a class="navbar-brand" href="{% url 'index' %}"><img src="{{ MEDIA_URL }}/pics/mbou-7_300_25p.gif" width="110px" height="110px"> МБОУ СОШ №7</a></p>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-left navbar-text lead">
@@ -162,6 +162,8 @@
              <li><a href="{% url 'edit_schedule' %}">Редактировать расписание</a></li>
              <li><a href="{% url 'edit_lesson' %}">Редактировать звонки</a></li>
              <li><a href="{% url 'document_add' %}">Добавить документ</a></li>
+             <li><a href="{% url 'gallery_add' %}">Добавить галлерею</a></li>
+             <li><a href="{% url 'photo_add' %}">Добавить фотографию</a></li>
            </ul>
         </div>
       {% endblock %}

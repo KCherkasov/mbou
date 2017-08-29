@@ -1,12 +1,14 @@
 ﻿from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
+from django.views.generic import CreateView
+from photologue.models import Photo, Gallery
 
 from django.utils import timezone
 import re
 
 from mbou.models import News, StudyForm, LessonTiming, Schedule, Document, DocumentCategory
-from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm, DocumentForm
+from mbou.forms import AddNewsForm, StudyFormForm, LessonTimingForm, ScheduleForm, DocumentForm, PhotoAddForm, GalleryAddForm
 
 from mbou import miscellaneous
 
@@ -127,7 +129,63 @@ class MbouPhotoListView(views.PhotoListView):
     context = super(MbouPhotoListView, self).get_context_data(**kwargs)
     context['year'] = timezone.now
     context['news'] = News.objects.all
-    context['cats'] = DocumentCategory.objects.get_top_x
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoDetailView(views.PhotoDetailView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoDateView(views.PhotoDateView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoDateView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoDateDetailView(views.PhotoDateDetailView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoDateDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoArchiveIndexView(views.PhotoArchiveIndexView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoArchiveIndexView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoDayArchiveView(views.PhotoDayArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoDayArchiveView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoMonthArchiveView(views.PhotoMonthArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoMonthArchiveView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouPhotoYearArchiveView(views.PhotoYearArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouPhotoYearArchiveView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
     return context
 
 class MbouGalleryListView(views.GalleryListView):
@@ -137,3 +195,99 @@ class MbouGalleryListView(views.GalleryListView):
     context['news'] = News.objects.all
     context['cats'] = DocumentCategory.objects.get_top_X
     return context
+
+class MbouGalleryDetailView(views.GalleryDetailView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryDateView(views.GalleryDateView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDateView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryDateDetailView(views.GalleryDateDetailView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDateDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryArchiveIndexView(views.GalleryArchiveIndexView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryArchiveIndexView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryDayArchiveView(views.GalleryDayArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDayArchiveView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryMonthArchiveView(views.GalleryMonthArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouGalleryYearArchiveView(views.GalleryYearArchiveView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouGalleryDetailView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+class MbouCreateView(CreateView):
+  def get_context_data(self, **kwargs):
+    context = super(MbouCreateView, self).get_context_data(**kwargs)
+    context['year'] = timezone.now
+    context['news'] = News.objects.all
+    context['cats'] = DocumentCategory.objects.get_top_X
+    return context
+
+#deprecated
+
+class MbouGalleryCreateView(MbouCreateView):
+  model = Gallery
+  fields = ['title', 'slug', 'description', 'photos']
+
+class MbouPhotoCreateView(MbouCreateView):
+  model = Photo
+  fields = ['title', 'slug', 'caption', 'image']
+
+# deprecated end
+
+def gallery_add(request):
+  if request.method == 'POST':
+    form = GalleryAddForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect(reverse('galleries'))
+  else:
+    form = GalleryAddForm()
+  return render(request, 'gallery_add.html', { 'form' : form, 'news': News.objects.all, "year": timezone.now, "cats" : DocumentCategory.objects.get_top_X, })
+
+def photo_add(request):
+  if request.method == 'POST':
+    form = PhotoAddForm(request.POST, request.FILES)
+    if  form.is_valid():
+      form.save()
+      return HttpResponseRedirect(reverse('photo_add'))
+  else:
+    form = PhotoAddForm()
+  return render(request, 'photo_add.html', { 'form' : form, 'year' : timezone.now, 'news' : News.objects.all, 'cats' : DocumentCategory.objects.get_top_X, })

@@ -8,6 +8,7 @@ import re
 from django.contrib.auth.hashers import make_password
 
 from mbou.models import News, StudyForm, LessonTiming, Schedule, Document, DocumentCategory
+from photologue.models import Photo, Gallery
 
 class AddNewsForm(forms.ModelForm):
   class Meta:
@@ -193,3 +194,39 @@ class DocumentForm(forms.Form):
         category = DocumentCategory.objects.get_or_create(name = cat_name)
         document.categories.add(category)
     return document
+
+class PhotoAddForm(forms.Form):
+  title = forms.CharField(max_length = 250, widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : u'Название фотографии', }), label = u'Название: ')
+  caption = forms.CharField(required = False, widget = forms.Textarea(attrs = { 'class' : 'form-control', 'placeholder' : u'Описание фотографии (необязательно)', }), label = u'Описание: ')
+  image = forms.ImageField(label = u'Фотография: ')
+  galleries = forms.ModelMultipleChoiceField(queryset = Gallery.objects, to_field_name = 'title', widget = forms.CheckboxSelectMultiple(attrs = { 'placeholder' : u'Выберите галлерею' }), label = u'Галереи: ')
+
+  def save(self):
+    data = self.cleaned_data
+    photo = Photo()
+    photo.title = data.get('title')
+    photo.slug = re.sub(' +', '_', photo.title)
+    photo.caption = data.get('caption')
+    if (data.get('image') is not None):
+      img_file = data.get('image')
+      photo.image.save('%s' % (img_file.name), img_file, save=True)
+    photo.save()
+    galleries = data.get('galleries')
+    if galleries is not None:
+      for gallery in galleries:
+        gallery.photos.add(photo)
+        gallery.save()
+    return photo
+
+class GalleryAddForm(forms.Form):
+  title = forms.CharField(max_length = 250, widget = forms.TextInput(attrs = { 'class' : 'form-control', 'placeholder' : u'Название галлереи', }), label = u'Название: ')
+  description = forms.CharField(required = False, widget = forms.Textarea(attrs = { 'class' : 'form-control', 'placeholder' : u'Описание галлереи (необязательно)', }), label = u'Описание: ')
+
+  def save(self):
+    data = self.cleaned_data
+    gallery = Gallery()
+    gallery.title = data.get('title')
+    gallery.slug = re.sub(' +', '_', gallery.title)
+    gallery.description = data.get('description')
+    gallery.save()
+    return gallery
